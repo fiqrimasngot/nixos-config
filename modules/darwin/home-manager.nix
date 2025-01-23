@@ -1,11 +1,11 @@
 { config, pkgs, lib, home-manager, ... }:
 
 let
-  user = "dustin";
+  user = "fiqrim";
   # Define the content of your file as a derivation
   myEmacsLauncher = pkgs.writeScript "emacs-launcher.command" ''
     #!/bin/sh
-      emacsclient -c -n &
+    emacsclient -c -n &
   '';
   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
@@ -24,10 +24,12 @@ in
   };
 
   homebrew = {
-    # This is a module from nix-darwin
-    # Homebrew is *installed* via the flake input nix-homebrew
     enable = true;
     casks = pkgs.callPackage ./casks.nix {};
+    # onActivation.cleanup = "uninstall";
+		onActivation.cleanup = "zap";
+		onActivation.autoUpdate = true;
+		onActivation.upgrade = true;
 
     # These app IDs are from using the mas CLI app
     # mas = mac app store
@@ -36,11 +38,24 @@ in
     # $ nix shell nixpkgs#mas
     # $ mas search <app name>
     #
+    # If you have previously added these apps to your Mac App Store profile (but not installed them on this system),
+    # you may receive an error message "Redownload Unavailable with This Apple ID".
+    # This message is safe to ignore. (https://github.com/dustinlyons/nixos-config/issues/83)
+
     masApps = {
-      "hidden-bar" = 1452453066;
-      "wireguard" = 1451685025;
+			"Magnet" = 441258766;
+      "Bitwarden" = 1352778147;
+      "Dark Mode for Safari: NightEye (5.2.2)" = 1450504903;
+      "Microsoft Word" = 462054704;
+      "Microsoft Excel" = 462058435;
+      "Microsoft PowerPoint" = 462062816;
+      "Microsoft Outlook" = 985367838;
+      "Microsoft OneNote" = 784801555;
+      "WhatsApp Messenger"= 310633997;
     };
   };
+  security.pam.enableSudoTouchIdAuth = true;
+
 
   # Enable home-manager
   home-manager = {
@@ -57,7 +72,6 @@ in
 
         stateVersion = "23.11";
       };
-
       programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
       # Marked broken Oct 20, 2022 check later to remove this
@@ -67,39 +81,28 @@ in
   };
 
   # Fully declarative dock using the latest from Nix Store
-  local = {
-    dock.enable = true;
-    dock.entries = [
-      { path = "/Applications/Slack.app/"; }
-      { path = "/System/Applications/Messages.app/"; }
-      { path = "/System/Applications/Facetime.app/"; }
-      { path = "/Applications/Telegram.app/"; }
-      { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
-      { path = "/System/Applications/Music.app/"; }
-      { path = "/System/Applications/News.app/"; }
-      { path = "/System/Applications/Photos.app/"; }
-      { path = "/System/Applications/Photo Booth.app/"; }
-      { path = "/System/Applications/TV.app/"; }
-      { path = "${pkgs.jetbrains.phpstorm}/Applications/PhpStorm.app/"; }
-      { path = "/Applications/TablePlus.app/"; }
-      { path = "/Applications/Asana.app/"; }
-      { path = "/Applications/Drafts.app/"; }
-      { path = "/System/Applications/Home.app/"; }
-      { path = "/Applications/iPhone Mirroring.app/"; }
-      {
-        path = toString myEmacsLauncher;
-        section = "others";
-      }
-      {
-        path = "${config.users.users.${user}.home}/.local/share/";
-        section = "others";
-        options = "--sort name --view grid --display folder";
-      }
-      {
-        path = "${config.users.users.${user}.home}/.local/share/downloads";
-        section = "others";
-        options = "--sort name --view grid --display stack";
-      }
-    ];
+  local = { 
+    dock = {
+      enable = true;
+      entries = [
+        { path = "/Applications/Slack.app/"; }
+        { path = "/System/Applications/Messages.app/"; }
+        { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
+        {
+          path = toString myEmacsLauncher;
+          section = "others";
+        }
+        {
+          path = "${config.users.users.${user}.home}/.local/share/";
+          section = "others";
+          options = "--sort name --view grid --display folder";
+        }
+        {
+          path = "${config.users.users.${user}.home}/.local/share/downloads";
+          section = "others";
+          options = "--sort name --view grid --display stack";
+        }
+      ];
+    };
   };
 }

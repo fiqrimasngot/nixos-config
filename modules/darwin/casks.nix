@@ -3,36 +3,34 @@ _:
 [
   # Development Tools
   "homebrew/cask/docker"
-  "claude"
-  "insomnia"
-  "tableplus"
-  "ngrok"
-  "postico"
-  "visual-studio-code"
-  "wireshark"
 
   # Communication Tools
   "discord"
-  "loom"
+  "notion"
   "slack"
   "telegram"
   "zoom"
+  "nextcloud"
 
   # Utility Tools
-  "appcleaner"
   "syncthing"
+  "balenaetcher"
+  "headlamp"
+  "displaylink"
+  "macs-fan-control"
+  "coconutbattery"
+  "turbovnc-viewer"
+  "vnc-viewer"
+  "viscosity"
+  "pgadmin4"
 
   # Entertainment Tools
-  "steam"
   "vlc"
+  "spotify"
+  "sony-ps-remote-play"
 
-  # Productivity Tools
-  "raycast"
-  "asana"
 
   # Browsers
   "google-chrome"
-
-  # AI
-  "diffusionbee"
+  "firefox"
 ]
