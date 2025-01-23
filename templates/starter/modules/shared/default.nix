@@ -5,13 +5,6 @@ let
 in
 {
 
-  home           = builtins.getEnv "HOME";
-  xdg_configHome = "${home}/.config";
-  "${xdg_configHome}/config/nvim" = {
-    source = ./config/nvim;
-    recursive = true;
-  };
-
   nixpkgs = {
     config = {
       allowUnfree = true;

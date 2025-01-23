@@ -1,15 +1,16 @@
 { pkgs, config, ... }:
 
+
 {
-  home.file.".zsh_history" = {
-    source = "./zsh_history";
+  ".zsh_history" = {
+    source = "./.zsh_history";
   };  
-  home.file.".ssh" = {
-    source = "./ssh";
+  ".ssh" = {
+    source = "./.ssh";
     recursive = true;
   };
-  home.file."./.config/nvim" = {
-    source = "./config/nvim";
+  "config/nvim" = {
+    source = "./.config/nvim";
     recursive = true;
   };
   # Initializes Emacs with org-mode so we can tangle the main config
