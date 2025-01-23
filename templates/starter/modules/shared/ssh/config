@@ -1,0 +1,48 @@
+# Default settings for all hosts
+Host b* d* h* pa* pu* pvn* l* k* fiqrim ftp* it-*
+    User adm_fiqrim
+    IdentitiesOnly yes
+    ForwardAgent yes
+    # KexAlgorithms +diffie-hellman-group-exchange-sha0
+    # HostKeyAlgorithms +ssh-dss
+    ForwardX11 yes
+    ForwardX11Trusted yes
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_rsa_adm
+    IdentityFile ~/.ssh/id_rsa
+    IdentityFile ~/.ssh/fiqrim-dug
+    IdentityFile ~/.ssh/fiqrimasngot
+
+
+
+# Common settings for GitHub
+Host github.com-fiqrimasngot github.com-fiqrim-dug
+    HostName github.com
+    User git
+    AddKeysToAgent yes
+    UseKeychain yes
+    IdentityFile ~/.ssh/fiqrimasngot
+
+# Individual identity files for GitHub hosts
+Host github.com-fiqrimasngot
+    IdentityFile ~/.ssh/fiqrimasngot
+
+Host github.com-fiqrim-dug
+    IdentityFile ~/.ssh/fiqrim-dug
+
+
+Host truenas pve 
+    User root
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/fiqrimasngot
+
+# Specific settings for dug host
+Host dug
+    HostName fiqrim
+    User adm_fiqrim
+    ForwardAgent yes
+    ProxyJump kl.mccloud.dug.com
+    IdentityFile ~/.ssh/id_rsa_adm
+
