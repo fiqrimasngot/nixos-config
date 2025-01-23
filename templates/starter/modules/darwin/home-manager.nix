@@ -27,6 +27,9 @@ in
     enable = true;
     casks = pkgs.callPackage ./casks.nix {};
     # onActivation.cleanup = "uninstall";
+		onActivation.cleanup = "zap";
+		onActivation.autoUpdate = true;
+		onActivation.upgrade = true;
 
     # These app IDs are from using the mas CLI app
     # mas = mac app store
@@ -38,11 +41,21 @@ in
     # If you have previously added these apps to your Mac App Store profile (but not installed them on this system),
     # you may receive an error message "Redownload Unavailable with This Apple ID".
     # This message is safe to ignore. (https://github.com/dustinlyons/nixos-config/issues/83)
+
     masApps = {
-      "1password" = 1333542190;
-      "wireguard" = 1451685025;
+			"Magnet" = 441258766;
+      "Bitwarden" = 1352778147;
+      "Dark Mode for Safari: NightEye (5.2.2)" = 1450504903;
+      "Microsoft Word" = 462054704;
+      "Microsoft Excel" = 462058435;
+      "Microsoft PowerPoint" = 462062816;
+      "Microsoft Outlook" = 985367838;
+      "Microsoft OneNote" = 784801555;
+      "WhatsApp Messenger"= 310633997;
     };
   };
+  security.pam.enableSudoTouchIdAuth = true;
+
 
   # Enable home-manager
   home-manager = {
@@ -56,6 +69,7 @@ in
           additionalFiles
           { "emacs-launcher.command".source = myEmacsLauncher; }
         ];
+
         stateVersion = "23.11";
       };
       programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
@@ -67,32 +81,28 @@ in
   };
 
   # Fully declarative dock using the latest from Nix Store
-  local.dock.enable = true;
-  local.dock.entries = [
-    { path = "/Applications/Slack.app/"; }
-    { path = "/System/Applications/Messages.app/"; }
-    { path = "/System/Applications/Facetime.app/"; }
-    { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
-    { path = "/System/Applications/Music.app/"; }
-    { path = "/System/Applications/News.app/"; }
-    { path = "/System/Applications/Photos.app/"; }
-    { path = "/System/Applications/Photo Booth.app/"; }
-    { path = "/System/Applications/TV.app/"; }
-    { path = "/System/Applications/Home.app/"; }
-    {
-      path = toString myEmacsLauncher;
-      section = "others";
-    }
-    {
-      path = "${config.users.users.${user}.home}/.local/share/";
-      section = "others";
-      options = "--sort name --view grid --display folder";
-    }
-    {
-      path = "${config.users.users.${user}.home}/.local/share/downloads";
-      section = "others";
-      options = "--sort name --view grid --display stack";
-    }
-  ];
-
+  local = { 
+    dock = {
+      enable = true;
+      entries = [
+        { path = "/Applications/Slack.app/"; }
+        { path = "/System/Applications/Messages.app/"; }
+        { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
+        {
+          path = toString myEmacsLauncher;
+          section = "others";
+        }
+        {
+          path = "${config.users.users.${user}.home}/.local/share/";
+          section = "others";
+          options = "--sort name --view grid --display folder";
+        }
+        {
+          path = "${config.users.users.${user}.home}/.local/share/downloads";
+          section = "others";
+          options = "--sort name --view grid --display stack";
+        }
+      ];
+    };
+  };
 }

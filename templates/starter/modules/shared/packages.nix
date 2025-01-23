@@ -7,19 +7,38 @@ with pkgs; [
   aspellDicts.en
   bash-completion
   bat
+  mkalias
+  mtr
   btop
+  gh
   coreutils
   killall
+  cloudflared
+  ipmitool
+  lftp
+  mas
+  kubernetes
   neofetch
+  mise
   openssh
+  go
+  mosh
   sqlite
   wget
+  lazygit
   zip
+  inetutils
+  tree
+  antibody
+  obsidian
+  eza
+  fzf
 
   # Encryption and security tools
   age
   age-plugin-yubikey
   gnupg
+  bitwarden-desktop
   libfido2
 
   # Cloud-related tools and SDKs
@@ -43,6 +62,7 @@ with pkgs; [
   nodejs
 
   # Text and terminal utilities
+  neovim
   htop
   hunspell
   iftop
